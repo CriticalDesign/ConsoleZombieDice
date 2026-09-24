@@ -26,8 +26,6 @@ namespace ConsoleZombieDice
             List<Die> gameDice = new List<Die>();
             ReloadGameDice(gameDice);
 
-            Random.Shared.Shuffle(CollectionsMarshal.AsSpan(gameDice));
-
             int playerScore = 0;
 
             List<Die> playerCurrentDice = new List<Die>();
@@ -65,11 +63,12 @@ namespace ConsoleZombieDice
                 
                 if (playerCurrentShotguns.Count >= 3)
                 {
-                    Console.WriteLine("You have been shotgunned! You lose all your brains.");
+                    Console.WriteLine("You have been shotgunned! You lose all your brains. Starting over.....");
                     playerCurrentBrains.Clear();
                     playerCurrentShotguns.Clear();
                     playerCurrentDice.Clear();
                     ReloadGameDice(gameDice);
+                    playerScore = 0;
                 }
                 else
                 {
@@ -77,10 +76,13 @@ namespace ConsoleZombieDice
                     string input = Console.ReadLine();
                     if (input.ToLower() != "y")
                     {
+                        playerScore += playerCurrentBrains.Count;
+                        Console.WriteLine("Final score = " + playerScore + " Starting over.....");
                         playerCurrentBrains.Clear();
                         playerCurrentShotguns.Clear();
                         playerCurrentDice.Clear();
                         ReloadGameDice(gameDice);
+                        playerScore = 0;
                         //keepGoing = false;
                     }
                 }
@@ -100,6 +102,8 @@ namespace ConsoleZombieDice
             {
                 new GreenDie(), new GreenDie(), new GreenDie(), new GreenDie(), new GreenDie(), new GreenDie(), new YellowDie(), new YellowDie(), new YellowDie(), new YellowDie(), new RedDie(), new RedDie(), new RedDie(),
             });
+            Random.Shared.Shuffle(CollectionsMarshal.AsSpan(dice));
+
         }
 
 
@@ -148,6 +152,7 @@ namespace ConsoleZombieDice
             }
             public override void ShowDieResult()
             {
+                Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(SideUp);
                 Console.ResetColor();
@@ -175,6 +180,7 @@ namespace ConsoleZombieDice
 
             public override void ShowDieResult()
             {
+                Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(SideUp);
                 Console.ResetColor();
@@ -202,6 +208,7 @@ namespace ConsoleZombieDice
 
             public override void ShowDieResult()
             {
+                Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(SideUp);
                 Console.ResetColor();
