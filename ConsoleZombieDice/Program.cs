@@ -31,6 +31,8 @@ namespace ConsoleZombieDice
             int totalScore = 0;
             int deaths = 0;
 
+            Random _rng = new Random();
+
             List<Die> playerCurrentDice = new List<Die>();
             List<Die> playerCurrentShotguns = new List<Die>();
             List<Die> playerCurrentBrains = new List<Die>();
@@ -77,8 +79,27 @@ namespace ConsoleZombieDice
                 }
                 else
                 {
-                    Console.WriteLine("Do you want to roll again? (y/n)");
+                    Console.Write("Do you want to roll again? (y/n) ");
                     string input = Console.ReadLine();
+
+                    /*
+                    string input = "";
+                    if(_rng.Next(0,2) == 0)
+                    {
+                        input = "y";
+                    }
+                    else
+                    {
+                        input = "n";
+                    }
+
+                    Console.WriteLine(input);
+                    */
+
+
+
+
+
                     if (input.ToLower() != "y")
                     {
                         playerScore += playerCurrentBrains.Count;
@@ -93,7 +114,7 @@ namespace ConsoleZombieDice
                     }
                 }
 
-            } while (numGames < 10);  //change this to 100 for your final version.
+            } while (numGames < 1000);  //change this to 100 for your final version.
             Console.WriteLine("Num Games: " + numGames + " Average score: " + (totalScore / (float)numGames) + " Deaths: " + deaths);
         }
 
