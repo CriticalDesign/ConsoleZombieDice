@@ -28,9 +28,7 @@ namespace ConsoleZombieDice
 
             Random.Shared.Shuffle(CollectionsMarshal.AsSpan(gameDice));
 
-            int player1Score = 0;
-            int player2Score = 0;
-            int currentPlayer = 1;
+            int playerScore = 0;
 
             List<Die> playerCurrentDice = new List<Die>();
             List<Die> playerCurrentShotguns = new List<Die>();
@@ -63,7 +61,7 @@ namespace ConsoleZombieDice
                 }
 
 
-                Console.WriteLine("Player " + currentPlayer + " Brains: " + playerCurrentBrains.Count + ", Shotgun blasts: " + playerCurrentShotguns.Count);
+                Console.WriteLine("Brains: " + playerCurrentBrains.Count + ", Shotgun blasts: " + playerCurrentShotguns.Count);
                 
                 if (playerCurrentShotguns.Count >= 3)
                 {
@@ -72,14 +70,6 @@ namespace ConsoleZombieDice
                     playerCurrentShotguns.Clear();
                     playerCurrentDice.Clear();
                     ReloadGameDice(gameDice);
-                    if(currentPlayer == 1)
-                    {
-                        currentPlayer = 2;
-                    }
-                    else
-                    {
-                        currentPlayer = 1;
-                    }
                 }
                 else
                 {
@@ -92,16 +82,6 @@ namespace ConsoleZombieDice
                         playerCurrentDice.Clear();
                         ReloadGameDice(gameDice);
                         //keepGoing = false;
-                        if (currentPlayer == 1)
-                        {
-                            AddBrainsToPlayerScore(ref player1Score, playerCurrentBrains.Count);   //convert this to a numPlayers array
-                            currentPlayer = 2;
-                        }
-                        else
-                        {
-                            AddBrainsToPlayerScore(ref player2Score, playerCurrentBrains.Count);
-                            currentPlayer = 1;
-                        }
                     }
                 }
 
