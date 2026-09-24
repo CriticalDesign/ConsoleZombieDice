@@ -27,11 +27,14 @@ namespace ConsoleZombieDice
             ReloadGameDice(gameDice);
 
             int playerScore = 0;
+            int numGames = 0;
+            int totalScore = 0;
+            int deaths = 0;
 
             List<Die> playerCurrentDice = new List<Die>();
             List<Die> playerCurrentShotguns = new List<Die>();
             List<Die> playerCurrentBrains = new List<Die>();
-            bool keepGoing = true;
+
 
             do
             {
@@ -69,6 +72,8 @@ namespace ConsoleZombieDice
                     playerCurrentDice.Clear();
                     ReloadGameDice(gameDice);
                     playerScore = 0;
+                    numGames++;
+                    deaths++;
                 }
                 else
                 {
@@ -77,17 +82,19 @@ namespace ConsoleZombieDice
                     if (input.ToLower() != "y")
                     {
                         playerScore += playerCurrentBrains.Count;
+                        totalScore += playerScore;
+                        numGames++;
                         Console.WriteLine("Final score = " + playerScore + " Starting over.....");
                         playerCurrentBrains.Clear();
                         playerCurrentShotguns.Clear();
                         playerCurrentDice.Clear();
                         ReloadGameDice(gameDice);
                         playerScore = 0;
-                        //keepGoing = false;
                     }
                 }
 
-            } while (keepGoing && !(playerCurrentShotguns.Count >= 3));
+            } while (numGames < 10);  //change this to 100 for your final version.
+            Console.WriteLine("Num Games: " + numGames + " Average score: " + (totalScore / (float)numGames) + " Deaths: " + deaths);
         }
 
         public static void AddBrainsToPlayerScore(ref int playerScore, int brains)
